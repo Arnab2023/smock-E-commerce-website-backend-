@@ -21,24 +21,24 @@ const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
 
-    // Check if the origin is included in the allowed origins list
-    if (process.env.ALLOWED_ORIGINS.split(",").includes(origin)) {
-      return callback(null, true);
-    } else {
-      var msg =
-        "The CORS policy for this site does not " +
-        "allow access from the specified Origin.";
-      return callback(new Error(msg), false);
-    }
-  },
-};
+//     // Check if the origin is included in the allowed origins list
+//     if (process.env.ALLOWED_ORIGINS.split(",").includes(origin)) {
+//       return callback(null, true);
+//     } else {
+//       var msg =
+//         "The CORS policy for this site does not " +
+//         "allow access from the specified Origin.";
+//       return callback(new Error(msg), false);
+//     }
+//   },
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use("/api/admins/", adminRoutes);
