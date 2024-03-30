@@ -27,7 +27,7 @@ app.use(
       // allow requests with no origin
       // (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (ALLOWED_ORIGINS.indexOf(origin) === -1) {
+      if (process.env.ALLOWED_ORIGINS.indexOf(origin) === -1) {
         var msg =
           "The CORS policy for this site does not " +
           "allow access from the specified Origin.";

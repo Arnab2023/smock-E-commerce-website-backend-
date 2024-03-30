@@ -106,12 +106,9 @@ const createProduct = asyncHandler(async (req, res) => {
 //  -------------------------------------------------------GetALL------------------------------------------------------------//
 
 const getAllProducts = asyncHandler(async (req, res) => {
-  try {
-    const products = await ProductsModel.find().sort({ createdAt: -1 });
-    res.status(200).json(products);
-  } catch (error) {
-    console.log(error);
-  }
+  const products = await ProductsModel.find();
+
+  res.status(200).json(products);
 });
 
 //  -------------------------------------------------------Get Category Product------------------------------------------------------------//
