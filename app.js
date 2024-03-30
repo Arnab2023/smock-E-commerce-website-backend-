@@ -20,12 +20,7 @@ const wishlistRoutes = require("./routes/WishlistRoutes");
 const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();
-const ALLOWED_ORIGINS = [
-  "https://smock-e-commerce-website-frontend.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "https://ecommerce-frontend-opal-sigma.vercel.app",
-];
+
 app.use(
   cors({
     origin: function (origin, callback) {
