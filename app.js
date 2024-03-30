@@ -20,25 +20,22 @@ const wishlistRoutes = require("./routes/WishlistRoutes");
 const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     // allow requests with no origin (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-
-//     // Check if the origin is included in the allowed origins list
-//     if (process.env.ALLOWED_ORIGINS.split(",").includes(origin)) {
-//       return callback(null, true);
-//     } else {
-//       var msg =
-//         "The CORS policy for this site does not " +
-//         "allow access from the specified Origin.";
-//       return callback(new Error(msg), false);
-//     }
-//   },
-// };
-
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (process.env.ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        var msg =
+          "The CORS policy for this site does not " +
+          "allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 app.use(express.json());
 app.use("/api/admins/", adminRoutes);

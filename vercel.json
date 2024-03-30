@@ -1,10 +1,20 @@
 {
-    "version": 2,
-    "name": "Ecommerce-Backend",
-    "builds": [
-       { "src": "app.js", "use": "@vercel/node" }
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    }
+  ],
+  "env": {
+    "PORT": 8000,
+    "ALLOWED_ORIGINS": [
+      "https://smock-e-commerce-website-frontend.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://ecommerce-frontend-opal-sigma.vercel.app"
     ],
-    "routes": [
-       { "src": "/(.*)", "dest": "/app.js" }
-    ]
+    "CONNECTION_STRING": "mongodb+srv://arnab192023:NuKDHDEl9i4TfrEB@data.ctr3efa.mongodb.net/E-commerce",
+    "ACCESS_TOKEN_SECRET": "rjvnvjrgrugjvnjvurgheuejcfeufeudcsdchivrivjvnvuirriifvrieiahbbviaouvihbvfh"
+  }
 }
