@@ -20,13 +20,19 @@ const wishlistRoutes = require("./routes/WishlistRoutes");
 const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();
+const ALLOWED_ORIGINS = [
+  "https://smock-e-commerce-website-frontend.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://ecommerce-frontend-opal-sigma.vercel.app",
+];
 app.use(
   cors({
     origin: function (origin, callback) {
       // allow requests with no origin
       // (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (process.env.ALLOWED_ORIGINS.indexOf(origin) === -1) {
+      if (ALLOWED_ORIGINS.indexOf(origin) === -1) {
         var msg =
           "The CORS policy for this site does not " +
           "allow access from the specified Origin.";
