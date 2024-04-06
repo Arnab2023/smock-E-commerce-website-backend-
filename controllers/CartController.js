@@ -49,7 +49,7 @@ const updateCart = asyncHandler(async (req, res) => {
     const count = req.body.qty;
     const _id = req.body.id;
     const size = req.body.size;
-    console.log(count, size, _id);
+    // console.log(count, size, _id);
     const updatedCart = await Cart.findByIdAndUpdate(
       _id,
       { count, size },
