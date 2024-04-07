@@ -25,10 +25,7 @@ const registerSubscriber = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Invalid email");
   }
-  if (!address) {
-    res.status(401);
-    throw new Error("Invalid address");
-  }
+  
   if (!isNumeric(phone)) {
     res.status(401);
     throw new Error("Invalid phone");
@@ -42,7 +39,6 @@ const registerSubscriber = asyncHandler(async (req, res) => {
   const subscriber = await SubscribersModel.create({
     name,
     password: hashedPass,
-    address,
     email,
     phone,
   });
