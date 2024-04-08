@@ -10,10 +10,15 @@ const SubscriberSchema = mongoose.Schema(
             type: String,
             required: [true, "password is required"]
         },        
-        address: {
-            type: String,
-            required: [true, "address is required"]
-        },
+        address: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Address'
+          }],
+          defaultAddress: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Address'
+          }, 
+        
         email: {
             type: String,
             required: [true, "email is required"]
