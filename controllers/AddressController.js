@@ -80,7 +80,7 @@ const updateAddress = asyncHandler(async (req, res) => {
 //===================================Default Address==============================//
 
 const defaultAddress = asyncHandler(async (req, res) => {
-    const { subId, addressId } = req.params;
+    const { subId, addressId } = req.query;
      
     try {
       const user = await User.findByIdAndUpdate(subId, { defaultAddress: addressId });
@@ -97,7 +97,7 @@ const defaultAddress = asyncHandler(async (req, res) => {
 //-------------------------------------delete Address--------------------------------//
 
 const deleteAddress = asyncHandler(async (req, res) => {
-    const addressId = req.params.addressId;
+    const addressId = req.query.addressId;
   
     try {
       // Find the address by ID and delete it
