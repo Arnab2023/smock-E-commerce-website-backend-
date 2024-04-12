@@ -8,4 +8,4 @@ router.route("/add-address").post(createAddress)
 router.route("/update-address").put(updateAddress)
 router.route("/default-address").put(defaultAddress)
 
-module.exports = router; 
+module.exports = router;     
