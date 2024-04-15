@@ -106,9 +106,21 @@ const createProduct = asyncHandler(async (req, res) => {
 //  -------------------------------------------------------GetALL------------------------------------------------------------//
 
 const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await ProductsModel.find();
+  try {
+    // Get all products
+    const products = await ProductsModel.find();
 
-  res.status(200).json(products);
+    // If there are no products, return empty response
+    if (products.length === 0) {
+      return res.status(404).send("No products found.");
+    }
+
+    // Send all products
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 //  -------------------------------------------------------Get Category Product------------------------------------------------------------//

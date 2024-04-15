@@ -108,10 +108,12 @@ const defaultAddress = asyncHandler(async (req, res) => {
 const deleteAddress = asyncHandler(async (req, res) => {
   const addressId = req.query.addressId;
   const subId = req.query.subId;
-  console.log(req.query.addressId);
 
   const user = await User.findById(subId);
-  user.address = user.address.filter((address) => address._id !== addressId);
+
+  user.address = user.address.filter(
+    (address) => address._id.toString() !== addressId
+  );
   if (user) {
     try {
       // Find the address by ID and delete it
@@ -119,10 +121,9 @@ const deleteAddress = asyncHandler(async (req, res) => {
 
       // Check if the address exists
       if (!deletedAddress) {
-        user.save();
         return res.status(404).json({ message: "Address not found" });
       }
-
+      user.save();
       res.status(200).json({ message: "Address deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });

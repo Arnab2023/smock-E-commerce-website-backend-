@@ -12,34 +12,20 @@ function isNumeric(n) {
 }
 
 const registerSubscriber = asyncHandler(async (req, res) => {
-  const { name, password, address, email, phone } = req.body;
-  if (!name) {
-    res.status(401);
-    throw new Error("Invalid name");
-  }
-  if (!password) {
-    res.status(401);
-    throw new Error("Invalid password");
-  }
-  if (!email) {
-    res.status(401);
-    throw new Error("Invalid email");
-  }
-  
+  const { phone } = req.body;
   if (!isNumeric(phone)) {
     res.status(401);
     throw new Error("Invalid phone");
   }
-  const existsWithEmail = await SubscribersModel.findOne({ email });
-  if (existsWithEmail) {
-    res.status(403);
-    throw new Error("User with same email already exists");
+  const existsWithPhone = await SubscribersModel.findOne({ phone });
+  if (existsWithPhone) {
+    res.status(201).json(existsWithPhone);
   }
-  const hashedPass = await bcrypt.hash(password, 10);
+  // const hashedPass = await bcrypt.hash(password, 10);
   const subscriber = await SubscribersModel.create({
-    name,
-    password: hashedPass,
-    email,
+    // name,
+    // password: hashedPass,
+    // email,
     phone,
   });
   res.status(201).json(subscriber);
