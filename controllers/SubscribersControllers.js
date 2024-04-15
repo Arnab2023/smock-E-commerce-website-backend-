@@ -10,43 +10,57 @@ const CouponsModel = require("../models/CouponsModel");
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
-
+ 
 const registerSubscriber = asyncHandler(async (req, res) => {
-  const { name, password, address, email, phone } = req.body;
-  if (!name) {
-    res.status(401);
-    throw new Error("Invalid name");
-  }
-  if (!password) {
-    res.status(401);
-    throw new Error("Invalid password");
-  }
-  if (!email) {
-    res.status(401);
-    throw new Error("Invalid email");
-  }
-  
+  const { phone } = req.body;
+  console.log(phone)
   if (!isNumeric(phone)) {
     res.status(401);
     throw new Error("Invalid phone");
   }
-  const existsWithEmail = await SubscribersModel.findOne({ email });
-  if (existsWithEmail) {
-    res.status(403);
-    throw new Error("User with same email already exists");
-  }
-  const hashedPass = await bcrypt.hash(password, 10);
+  try{
+  const existsWithPhone = await SubscribersModel.findOne({ phone });
+  if (existsWithPhone) {
+    const accessToken = jwt.sign(
+      {
+        subscriber: {
+          id: existsWithPhone._id,
+          name: existsWithPhone.name,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    res.status(201).json(accessToken);
+    
+   
+  }else{
+  // const hashedPass = await bcrypt.hash(password, 10);
   const subscriber = await SubscribersModel.create({
-    name,
-    password: hashedPass,
-    email,
-    phone,
-  });
-  res.status(201).json(subscriber);
+    phone
+  }); 
+  if(subscriber){
+    const accessToken = jwt.sign(
+      {
+        subscriber: {
+          id: subscriber._id,
+          name: subscriber.name,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    res.status(200).json(accessToken);
+  }
+
+}
+}catch(e){
+  console.log(e)
+}
 });
 
 const loginSubscriber = asyncHandler(async (req, res) => {
-  const { name, password } = req.body;
+  const { name, password } = req.body; 
   if (!name || !password) {
     res.status(403);
     throw new Error("Invalid name or password");

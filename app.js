@@ -17,7 +17,7 @@ const couponsRoutes = require("./routes/CouponRoutes");
 const couponsSecureRoutes = require("./routes/CouponSecureRoutes");
 const cartRoutes = require("./routes/CartRoutes");
 const wishlistRoutes = require("./routes/WishlistRoutes");
-const addressRoutes =require("./routes/AddressRoutes");
+const addressRoutes = require("./routes/AddressRoutes");
 const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();

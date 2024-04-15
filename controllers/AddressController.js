@@ -5,7 +5,8 @@ const asyncHandler = require("express-async-handler");
 //================================================Adding Address=====================//
 const createAddress = asyncHandler(async (req, res) => {
   const body = req.body;
-  const subId = req.query.subId;
+  const subId = req.subid;
+  console.log(subId);
 
   if (!body.state) {
     res.status(400).json({ message: "state is required" });
@@ -55,7 +56,7 @@ const updateAddress = asyncHandler(async (req, res) => {
       body.phoneNumber !== undefined && body.phoneNumber !== ""
         ? body.phoneNumber
         : address.phoneNumber;
-    address.pincode = 
+    address.pincode =
       body.pincode !== undefined && body.pincode !== ""
         ? body.pincode
         : address.pincode;
@@ -86,30 +87,35 @@ const updateAddress = asyncHandler(async (req, res) => {
 //===================================Default Address==============================//
 
 const defaultAddress = asyncHandler(async (req, res) => {
-    const { subId, addressId } = req.params;
-     
-    try {
-      const user = await User.findByIdAndUpdate(subId, { defaultAddress: addressId });
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.status(200).json({ message: "Default address updated successfully", user });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+  const { addressId } = req.query;
+  const subId=req.subid
+
+  try {
+    const user = await User.findByIdAndUpdate(subId, {
+      defaultAddress: addressId,
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  });
-  
+    res
+      .status(200)
+      .json({ message: "Default address updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //-------------------------------------delete Address--------------------------------//
 
 const deleteAddress = asyncHandler(async (req, res) => {
   const addressId = req.query.addressId;
-  const subId = req.query.subId;
- 
+  const subId = req.subid
 
   const user = await User.findById(subId);
-  
-  user.address = user.address.filter((address) => address._id.toString() !== addressId);
+
+  user.address = user.address.filter(
+    (address) => address._id.toString() !== addressId
+  );
   if (user) {
     try {
       // Find the address by ID and delete it
@@ -117,10 +123,9 @@ const deleteAddress = asyncHandler(async (req, res) => {
 
       // Check if the address exists
       if (!deletedAddress) {
-       
         return res.status(404).json({ message: "Address not found" });
       }
-      user.save()
+      user.save();
       res.status(200).json({ message: "Address deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -128,10 +133,9 @@ const deleteAddress = asyncHandler(async (req, res) => {
   }
 });
 
-
 //===================================get Address===========================================//
 const getAddress = asyncHandler(async (req, res) => {
-  const subId = req.query.subId;
+  const subId = req.subid;
 
   try {
     const user = await User.findById(subId);
