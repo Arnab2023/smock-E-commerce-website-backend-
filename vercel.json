@@ -1,5 +1,17 @@
 {
   "version": 2,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "font-src 'self' https://smock-e-commerce-website-backend-seven.vercel.app https://fonts.googleapis.com"
+        }
+      ]
+    }
+  ],
+
   "routes": [
     {
       "src": "/(.*)",

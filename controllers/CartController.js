@@ -2,7 +2,7 @@ const Cart = require("../models/CartModel");
 const asyncHandler = require("express-async-handler");
 
 const CreateCartItem = asyncHandler(async (req, res) => {
-  const cartItem = req.body;
+  const cartItem = {...req.body,userId:req.subid}
   try {
     const existingItem = await Cart.findOne({
       productId: cartItem.productId,
@@ -17,6 +17,7 @@ const CreateCartItem = asyncHandler(async (req, res) => {
     const newItem = await Cart.create(cartItem);
     res.status(201).json(newItem);
   } catch (err) {
+    console.log(error)
     res.status(400).json({ message: err.message });
   }
 });
@@ -36,8 +37,9 @@ const removeCart = asyncHandler(async (req, res) => {
 });
 
 const getCart = asyncHandler(async (req, res) => {
+  const userId =req.subid;
   try {
-    const cart = await Cart.find().populate("productId");
+    const cart = await Cart.find({userId}).populate("productId");
     res.json(cart);
   } catch (err) {
     res.status(500).json({ message: err.message });

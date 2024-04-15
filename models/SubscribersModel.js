@@ -22,7 +22,7 @@ const SubscriberSchema = mongoose.Schema(
     defaultAddress: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Address",
-      default: "",
+      default:null,
     },
 
     email: {

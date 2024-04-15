@@ -5,7 +5,8 @@ const asyncHandler = require("express-async-handler");
 //================================================Adding Address=====================//
 const createAddress = asyncHandler(async (req, res) => {
   const body = req.body;
-  const subId = req.query.subId;
+  const subId = req.subid;
+  console.log(subId);
 
   if (!body.state) {
     res.status(400).json({ message: "state is required" });
@@ -86,7 +87,8 @@ const updateAddress = asyncHandler(async (req, res) => {
 //===================================Default Address==============================//
 
 const defaultAddress = asyncHandler(async (req, res) => {
-  const { subId, addressId } = req.query;
+  const { addressId } = req.query;
+  const subId=req.subid
 
   try {
     const user = await User.findByIdAndUpdate(subId, {
@@ -107,7 +109,7 @@ const defaultAddress = asyncHandler(async (req, res) => {
 
 const deleteAddress = asyncHandler(async (req, res) => {
   const addressId = req.query.addressId;
-  const subId = req.query.subId;
+  const subId = req.subid
 
   const user = await User.findById(subId);
 
@@ -133,7 +135,7 @@ const deleteAddress = asyncHandler(async (req, res) => {
 
 //===================================get Address===========================================//
 const getAddress = asyncHandler(async (req, res) => {
-  const subId = req.query.subId;
+  const subId = req.subid;
 
   try {
     const user = await User.findById(subId);

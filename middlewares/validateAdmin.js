@@ -8,7 +8,7 @@ const validateAdmin = asyncHandler(async (req, res, next) => {
     token = authHeader.split(" ")[1];
     if (!token) {
       res.status(401);
-      throw new Error("Admin is not authorized or token is missing");
+      throw new Error("subscriber is not authorized or token is missing");
     }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
