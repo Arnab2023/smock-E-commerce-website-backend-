@@ -2,7 +2,7 @@ const Wishlist = require("../models/WishlistModel");
 const asyncHandler = require("express-async-handler");
 
 const CreateWishlistItem = asyncHandler(async (req, res) => {
-  const WishlistItem = req.body;
+  const WishlistItem = { ...req.body, userId: req.subid };
   try {
     const existingItem = await Wishlist.findOne({
       productId: WishlistItem.productId,
@@ -36,7 +36,9 @@ const removeWishlist = asyncHandler(async (req, res) => {
 
 const getWishlist = asyncHandler(async (req, res) => {
   try {
-    const wishlist = await Wishlist.find().populate("productId");
+    const wishlist = await Wishlist.find({ userId: req.subid }).populate(
+      "productId"
+    );
     res.json(wishlist);
   } catch (err) {
     res.status(500).json({ message: err.message });

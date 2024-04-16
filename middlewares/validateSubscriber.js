@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
 const validateSubscriber = asyncHandler(async (req, res, next) => {
@@ -17,7 +17,7 @@ const validateSubscriber = asyncHandler(async (req, res, next) => {
           res.status(401);
           throw new Error("User is not authorized");
         }
-        console.log(decoded.subscriber.id)
+        console.log(decoded.subscriber.id);
         req.subid = decoded.subscriber.id; // Assuming subscriber id is stored in decoded token
         next();
       });
@@ -26,9 +26,9 @@ const validateSubscriber = asyncHandler(async (req, res, next) => {
       throw new Error("Bearer token is missing");
     }
   } catch (error) {
-    console.log(error.message)
-    
-    res.status(400).json({ message: 'maa chud gayi' });
+    console.log(error.message);
+
+    res.status(400).json({ message: "maa chud gayi" });
   }
 });
 

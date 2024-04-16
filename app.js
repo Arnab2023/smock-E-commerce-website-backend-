@@ -18,6 +18,7 @@ const couponsSecureRoutes = require("./routes/CouponSecureRoutes");
 const cartRoutes = require("./routes/CartRoutes");
 const wishlistRoutes = require("./routes/WishlistRoutes");
 const addressRoutes = require("./routes/AddressRoutes");
+const checkoutRoutes = require("./routes/CheckoutRoutes");
 const ConnectDB = require("./config/dbConfig");
 
 ConnectDB();
@@ -55,6 +56,7 @@ app.use("/api/transactions/", TransactionRoutes);
 app.use("/api/cart/", cartRoutes);
 app.use("/api/wishlist/", wishlistRoutes);
 app.use("/api/address/", addressRoutes);
+app.use("/api", checkoutRoutes);
 app.use(errorHandler);
 
 module.exports = app;
